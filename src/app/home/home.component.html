@@ -1,0 +1,408 @@
+<div class="container-fluid">
+  <app-header></app-header>
+
+  <div class="row login col-xs-4">
+    <div class="col-xs-12" *ngIf="!tokenAuthService.userSignedIn()">
+      <div *ngIf="!error_session">
+      <h1>Hi.</h1>
+      <h3>TRUEBLUE</h3>
+      <h6>Sign in to TrueBlue and experience jetblue.com in a whole new way.</h6>
+      <!-- Login  Block -->
+      <form (ngSubmit)="onSignInSubmit()" #f="ngForm" class="form-group" >
+        <div class="row" >
+
+          <div class="input-field col-xs-12 form-group">
+            <input id="email"
+                   type="email"
+                   required
+                   name='email'
+                   placeholder="Email"
+                   [(ngModel)]="signInUser.email"
+                   class="validate form-control ">
+          </div>
+
+
+          <div class="input-field col-xs-12 form-group ">
+            <input id="password"
+                   type="password"
+                   required
+                   name='password'
+                   placeholder="Password"
+                   [(ngModel)]="signInUser.password"
+                   class="validate form-control ">
+          </div>
+
+          <div class="col-xs-12 form-group">
+            <button type="submit"
+                    [disabled]="!(f.valid)"
+                    [ngClass]="{'disabled': !(f.valid)}"
+                    class="btn btn-mini btn-danger waves-effect waves-light  blue right"
+            >
+              SignIn </button> or JOIN NOW!
+          </div>
+
+
+        </div>
+
+      </form>
+      <p><input type="checkbox"  > <label >Remember email address</label></p>
+      <p><a href="#" class="btn">Forgot your Password?</a></p>
+    </div>
+    </div>
+    <!-- Login  Block END-->
+    <!-- Login  Session Block START -->
+    <div class="col-xs-12" *ngIf="tokenAuthService.userSignedIn()">
+      <div *ngIf="!error_session">
+      <div class="col-xs-12">
+          <div class="row">
+            <h1 class="pull-left" >Hi,</h1>
+            <h5 class="pull-right" style="margin-top: 28px;"><a (click)="logOut()" >SignOut</a></h5>
+          </div>
+      </div>
+      <div *ngIf="authTokenService.currentUserData">
+          <h3>{{authTokenService.currentUserData.first_name}} {{authTokenService.currentUserData.last_name}}</h3>
+      </div>
+      <h4><a href="#">Earn even more points.</a></h4>
+      <h5><span style="background:#22517B;" class="btn btn-mini"> &nbsp;LEARN HOW &nbsp;</span></h5>
+      <h4>What do you want to do today?</h4>
+      <div class="row col-xs-10">
+        <ng2-simple-dropdown [items]="categories" [isEditable]="'false'"
+          [(ngModel)]="selectedCategory"
+          [defaultValue]="defaultCategory" style="height: 30px;">
+        </ng2-simple-dropdown>
+    </div>
+  </div>
+    </div>
+    <!-- Login  Session Block END-->
+    <!-- Login  Session Error START -->
+    <div class="col-xs-12" *ngIf="error_session" style="min-height: 394px;">
+      <div class="col-xs-12">
+          <div class="row">
+            <h1 class="pull-left" >Oops!</h1>
+            <h5 class="pull-right" style="margin-top: 28px;"><a (click)="gotoLogin()" style="color:white;"><i class="glyphicon glyphicon-remove-sign"></i></a></h5>
+          </div>
+      </div>
+          <h5>Your email and/or password were entered incorrectly.</h5>
+      <h5><span style="background:#22517B;" class="btn btn-mini"><a (click)="gotoLogin()" style="color:white;">TRY AGAIN &nbsp;</a></span></h5>
+    </div>
+    <!-- Login  Session Block END-->
+  </div>
+
+  <div class="row flight-book col-xs-8" *ngIf="flight_check">
+    <div class="clearfix">&nbsp;</div>
+    <div class="row col-xs-12">
+        <div class="col-xs-4">
+          <p style="font-size:24px;font-weight:bold;">Buy.</p>
+        </div>
+        <div class="col-xs-8 ">
+          <div class="pull-right">
+            <button class="btn btn-default" (click)="openCheckIn()"><i class="glyphicon glyphicon-ok">&nbsp;</i>CHECK IN</button>
+            <button class="btn btn-default" (click)="openFlightStatus()"><i class="glyphicon glyphicon-time">&nbsp;</i>FLIGHT STATUS</button>
+          </div>
+        </div>
+      </div>
+        <div class="col-xs-12 ">
+          <div class="">
+            <button class="btn btn-default btn-round" (click)="openFlightsIn()" ><strong>FLIGHTS</strong></button>
+            <button class="btn btn-default btn-round" (click)="openHotelsIn()" ><strong>FLIGHTS + HOTEL = SAVINGS</strong></button>
+          </div>
+        </div>
+        <div class="col-xs-12 ">
+          <div class="col-xs-6">
+            <p>0 recent searches</p>
+          </div>
+          <div class="col-xs-6">
+            <div class="radio trip-radio" *ngFor="let option of tripData">
+                  <label  *ngIf="fl_status">
+                      <input type="radio" [value]="option.id"
+                             (change)="changeTripOptions()" name="radio-list" [checked]='tripSelect == option.id'>
+                      <span>{{ option.name }}</span>
+                  </label>
+              </div>
+              <div class="radio trip-radio" *ngFor="let opt of tripCashData" >
+                    <label *ngIf="fl_hotel_status">
+                        <input type="radio" [value]="opt.id"
+                               (change)="changeTripPointOptions()" name="radio-list2" [checked]='tripCashSelect == opt.id'>
+                        <span>{{ opt.name }}</span>
+                    </label>
+                </div>
+          </div>
+          <br>
+        </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="col-xs-6  ">
+            <div class="input-field  form-group form-control ">
+              <a href="#" class="inputImg">FROM <i class="glyphicon glyphicon-triangle-bottom"></i></a>
+              <input  ngui-auto-complete
+                               [source]="mySource"
+                               [list-formatter]="autocompleListFormatter"
+                               [max-num-list]=15
+                               value-property-name="code"
+                               display-property-name="name"
+                               placeholder="From"
+                               min-chars="2"
+                               style="background:none;border:none;outline:none;">
+            </div>
+        </div>
+          <div class="col-xs-6  ">
+            <div class="input-field  form-group form-control">
+             <a href="#" class="inputImg"> TO&nbsp;&nbsp;&nbsp;&nbsp; <i class="glyphicon glyphicon-triangle-bottom"></i></a>
+            <input  ngui-auto-complete
+                             [source]="mySource"
+                             [list-formatter]="autocompleListFormatter"
+                             [max-num-list]=15
+                             value-property-name="code"
+                             display-property-name="name"
+                             placeholder="To"
+                             min-chars="2"
+                            style="background:none;border:none;outline:none;"
+                             >
+                             </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class=" input-field col-xs-6 form-group ">
+              <!-- <date-picker [(ngModel)]="fromDate" name="from_date" [showClearButton]=false ></date-picker> -->
+              <dp-date-picker [(ngModel)]="selectedFromDate" [config]="datePickerConfig" theme='dp-material' class="form-control" placeholder="   Depart date: DD-MM-YYYY"></dp-date-picker>
+          </div>
+          <div class="input-field col-xs-6 form-group ">
+              <!-- <date-picker [(ngModel)]="toDate" name="to_date" [showClearButton]=false ></date-picker> -->
+              <dp-date-picker [(ngModel)]="selectedToDate" [config]="datePickerConfig" theme='dp-material'    placeholder="   Return date: DD-MM-YYYY" ></dp-date-picker>
+          </div>
+
+        </div>
+      </div>
+      <div class="row">
+      <div class="col-xs-9">
+          <div class="col-xs-3" style="margin-right:-5%;">
+          <ng2-simple-dropdown [items]="savedAdults" [isEditable]="'false'"
+            [(ngModel)]="selectedAdult"
+            [defaultValue]="defaultSelectAdult">
+          </ng2-simple-dropdown>
+          </div>
+          <div class="col-xs-4" style="margin-right:-5%;">
+          <ng2-simple-dropdown [items]="savedKids" [isEditable]="'false'"
+            [(ngModel)]="selectedKid"
+            [defaultValue]="defaultSelectKid">
+          </ng2-simple-dropdown>
+          </div>
+          <div class="col-xs-5" style="margin-right:-5%;">
+          <ng2-simple-dropdown [items]="savedInfants" [isEditable]="'false'"
+            [(ngModel)]="selectedInfant"
+            [defaultValue]="defaultSelectInfant">
+          </ng2-simple-dropdown>
+          </div>
+
+      </div>
+      <div class="col-xs-3" *ngIf="fl_hotel_status">
+        <div class="pull-left" style="margin-right:-5%;margin-left: -82px;" >
+        <ng2-simple-dropdown [items]="savedRooms" [isEditable]="'false'"
+          [(ngModel)]="selectedRoom"
+          [defaultValue]="defaultSelectRoom">
+        </ng2-simple-dropdown>
+        </div>
+      </div>
+    </div>
+    <div >
+      <div class=" pull-right">
+        <div class="col-xs-12" style="margin-top: -10%;">
+          <div class="radio trip-radio" *ngFor="let opt of tripPointData" >
+                <label *ngIf="fl_status">
+                    <input type="radio" [value]="opt.label"
+                           (change)="changeTripPointOptions()" name="radio-list1" [checked]='tripPointSelect == opt.label'>
+                    <span>{{ opt.name }}</span>
+                </label>
+            </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="clearfix">&nbsp;</div>
+    <div class="row">
+      <div class="row col-xs-10 small_content">
+        <br/>
+        <p style="margin-left:25px;"><i class="glyphicon glyphicon-user" ></i> Special Assistance &nbsp;
+        <i class="glyphicon glyphicon-briefcase" ></i> New baggage policy &nbsp;
+        <i class="glyphicon glyphicon-question-sign" ></i> 8+ travelers, pets, kids, lap infants, FAQs</p>
+      </div>
+      <div class="col-xs-2 pull-right">
+        <button class="btn btn-default btn-info"><strong>FIND IT</strong></button>
+      </div>
+    </div>
+  </div>
+  <!-- Check in Block -->
+  <div class="row flight-book col-xs-8" *ngIf="checkin_status">
+    <div class="col-xs-12">
+        <div class="col-xs-6">
+          <p style="font-size:34px;font-weight:bold;">Check in.</p>
+        </div>
+        <div class="col-xs-6">
+          <h3 (click)="closeCheckIn()"><i class="glyphicon glyphicon-remove-sign pull-right"></i></h3>
+        </div>
+      </div>
+        <div class="col-xs-12 ">
+            <strong>You can check in online up to 24 hours in advance, but no less than 90 minutes prior to your flight.</strong>
+          <br>
+        </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="input-field col-xs-6 form-group ">
+            <input id="confirmation-code"
+                   type="text"
+                   required
+                   name='confirmation-code'
+                   placeholder="Confirmation Code"
+                   class="form-control ">
+          </div>
+          <div class="input-field col-xs-6 form-group ">
+            <input id="first-name"
+                   type="text"
+                   required
+                   name='first-name'
+                   placeholder="First Name"
+                   class="form-control ">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class=" input-field col-xs-6 form-group ">
+            <div class="input-field  form-group form-control ">
+              <a href="#" class="inputImg">FROM <i class="glyphicon glyphicon-triangle-bottom"></i></a>
+              <input  ngui-auto-complete
+                               [source]="mySource"
+                               [list-formatter]="autocompleListFormatter"
+                               [max-num-list]=15
+                               value-property-name="code"
+                               display-property-name="name"
+                               placeholder=""
+                               min-chars="2"
+                               style="background:none;border:none;outline:none;">
+            </div>
+          </div>
+          <div class="input-field col-xs-6 form-group ">
+            <input id="last-name"
+                   type="text"
+                   required
+                   name='last-name'
+                   placeholder="Last Name"
+                   class="form-control ">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+        <p>Don't have your confirmation code?</p>
+        <p>Get your boarding pass through your TrueBlue account</p>
+      </div>
+      <div class="col-xs-12">
+        <div class="pull-right">
+          <button class="btn btn-default btn-warning">CHECK IN</button>
+        </div>
+      </div>
+      </div>
+  </div>
+  <!-- Check in BLock End -->
+  <!-- Flight Status  Block -->
+  <div class="row flight-book col-xs-8" *ngIf="flight_status">
+    <div class="col-xs-12">
+        <div class="col-xs-6">
+          <p style="font-size:34px;font-weight:bold;">Flight Status</p>
+        </div>
+        <div class="col-xs-6">
+          <h3 (click)="closeFlightStatus()"><i class="glyphicon glyphicon-remove-sign pull-right"></i></h3>
+        </div>
+      </div>
+      <div class="row col-xs-12">
+          <div class="col-xs-12 ">
+            <div >
+              <button class="btn btn-default btn-round">BY CITIES </button>
+              <button class="btn btn-default btn-round">FLIGHT NUMBER</button>
+            </div>
+            <br/>
+          </div>
+
+        </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class=" input-field col-xs-6 form-group ">
+            <div class="input-field  form-group form-control ">
+              <a href="#" class="inputImg">FROM <i class="glyphicon glyphicon-triangle-bottom"></i></a>
+              <input  ngui-auto-complete
+                               [source]="mySource"
+                               [list-formatter]="autocompleListFormatter"
+                               [max-num-list]=15
+                               value-property-name="code"
+                               display-property-name="name"
+                               placeholder="From"
+                               min-chars="2"
+                               style="background:none;border:none;outline:none;">
+            </div>
+          </div>
+
+          <div class="input-field col-xs-6 form-group ">
+            <input id=""
+                   type="text"
+                   required
+                   name='last-name'
+                   class="form-control ">
+          </div>
+        </div>
+      </div>
+      <div class="row ">
+        <div class="col-xs-12">
+          <div class=" input-field col-xs-6 form-group ">
+            <div class="input-field  form-group form-control ">
+              <a href="#" class="inputImg">To <i class="glyphicon glyphicon-triangle-bottom"></i></a>
+              <input  ngui-auto-complete
+                               [source]="mySource"
+                               [list-formatter]="autocompleListFormatter"
+                               [max-num-list]=15
+                               value-property-name="code"
+                               display-property-name="name"
+                               placeholder="To"
+                               min-chars="2"
+                               style="background:none;border:none;outline:none;">
+            </div>
+          </div>
+        <div class="input-field col-xs-6 form-group">
+            <button class="btn btn-default btn-warning ">CHECK STATUS</button>
+        </div>
+      </div>
+      </div>
+  </div>
+  <!-- Flight Status BLock End -->
+  <div class="row" >
+
+    <div class="col-xs-8 slider_img">
+      <!-- <img id="slideshow" [src]="urlVariable"> -->
+      <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides">
+                                <slide *ngFor="let slidez of slides; let index=index"
+                                       [active]="slidez.active">
+                                    <img [src]="slidez.image" style="margin:auto;">
+                                </slide>
+                              </carousel>
+    </div>
+    <div class="col-xs-4 slider_img">
+      <img src="/assets/images/slider/right_slide.jpg" >
+    </div>
+  </div>
+  <app-slider></app-slider>
+  <!-- <button (click)="openModal('custom-modal-1')">Open Modal 1</button>
+  <modal id="custom-modal-1" style="background:red;">
+      <div class="modal">
+          <div class="modal-body">
+              <h1>A Custom Modal!</h1>
+              <p>
+                  Home page text: <input type="text" [(ngModel)]="bodyText" />
+              </p>
+              <button (click)="closeModal('custom-modal-1');">Close</button>
+          </div>
+      </div>
+      <div class="modal-background"></div>
+  </modal> -->
+</div>
+<div class="clearfix">&nbsp;</div>

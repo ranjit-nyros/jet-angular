@@ -1,0 +1,130 @@
+<div class="container-fluid">
+  <app-header></app-header>
+  <div class="row col-xs-12" style="">
+    <div class="col-xs-2">&nbsp;</div>
+    <div class="col-xs-8">
+      <section class="demo">
+        <!-- <h1>
+          Angular2 - Form Wizard Demo
+        </h1> -->
+        <hr/>
+        <div >
+        <form-wizard  (onStepChanged)="onStepChanged($event)">
+          <wizard-step [title]="'Step1'"  [isValid]="emailForm.form.valid" (onNext)="onStep1Next($event)">
+
+            <h3>Join TrueBlue: Getting started</h3>
+            <p>Please complete the form below using an email address and password that's easy to remember.</p>
+            <hr/>
+            <form (ngSubmit)="onSignUpSubmit()" #emailForm="ngForm">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Enter your Email address<span class="req">*</span></label>
+                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email"
+                  [(ngModel)]="data.email" #email="ngModel" email required>
+                  <small class="text-danger" *ngIf="email.errors?.email && email.touched">Please Enter a valid email</small>
+                  <!-- <small class="text-danger" [hidden]="email.valid || (email.pristine && !emailForm.submitted)">Please Enter a valid email</small> -->
+              </div>
+              <div class="form-group">
+                <label for="exampleInputpassword">Create your Password<span class="req">*</span></label>
+                <input type="password" class="form-control" id="password" name="password" aria-describedby="emailHelp" placeholder="Enter Password"
+                  [(ngModel)]="data.password" #password="ngModel" required validateEqual="confirmation_password" reverse="true">
+                  <small [hidden]="password.valid || (password.pristine && !emailForm.submitted)" class="text-danger"> Password is required  </small>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputConfirmationpassword">Confirm Password<span class="req">*</span></label>
+                <input type="password" class="form-control" id="confirmation_password" name="confirmPassword" aria-describedby="emailHelp" placeholder="Confirm Password"
+                  [(ngModel)]="data.confirmation_password" #confirmPassword="ngModel"  required validateEqual="password" reverse="false">
+                  <small [hidden]="confirmPassword.valid || (confirmPassword.pristine && !emailForm.submitted)" class="text-danger">     Password mismatch   </small>
+              </div>
+
+            </form>
+          </wizard-step>
+          <wizard-step [title]="'Step2'"  (onNext)="onStep2Next($event)" [isValid]="emailForm1.form.valid">
+            <h3>Join TrueBlue: Personal information</h3>
+            <p>Due to government regulation, please fill out the following information as it appears on the identification document you are traveling with.</p>
+            <form #emailForm1="ngForm">
+              <div class="form-group">
+                <label class="form-check-label">First Name<span class="req">*</span></label>
+                  <input type="text" class="form-control"  name="firstName" #firstName="ngModel" [(ngModel)]="data.first_name" required/>
+                  <small [hidden]="firstName.valid || (firstName.pristine)" class="text-danger"> first name is required  </small>
+              </div>
+              <div class="form-group">
+                <label class="form-check-label">Middle Name</label>
+                  <input type="text" class="form-control" name="middle_name"  [(ngModel)]="data.middle_name" />
+              </div>
+              <div class="form-group">
+                <label class="form-check-label">Last Name<span class="req">*</span></label>
+                  <input type="text" class="form-control" name="lastName"  #lastName="ngModel" [(ngModel)]="data.last_name" required/>
+                  <small [hidden]="lastName.valid || (lastName.pristine)" class="text-danger"> last name is required  </small>
+              </div>
+            </form>
+          </wizard-step>
+          <wizard-step [title]="'Step3'" (onNext)="onStep3Next($event)" [isValid]="emailForm2.form.valid">
+            <h3>Join TrueBlue: Contact information</h3>
+            <form #emailForm2="ngForm">
+              <div class="form-group">
+                <label class="form-check-label">Address Line1<span class="req">*</span>:</label>
+                  <input type="text" class="form-control" name="addressLine1" #addressLine1="ngModel" [(ngModel)]="data.address_line1" required/>
+                  <small [hidden]="addressLine1.valid || (addressLine1.pristine)" class="text-danger"> address  is required  </small>
+              </div>
+              <div class="form-group">
+                <label class="form-check-label">Address Line2<span class="req">*</span>:</label>
+                  <input type="text" class="form-control" name="addressLine2" #addressLine2="ngModel" [(ngModel)]="data.address_line2" required/>
+                  <small [hidden]="addressLine2.valid || (addressLine2.pristine)" class="text-danger"> address is required  </small>
+              </div>
+            </form>
+          </wizard-step>
+
+         <wizard-step [title]="'Step4'" (onComplete)="onComplete($event)"  >
+
+            <div [ngSwitch]="isCompleted">
+              <div *ngSwitchDefault>
+                <h3>Join TrueBlue: Security Information</h3>
+
+                <div class="form-group">
+                  <label class="form-check-label">Security Question: 1<span class="req">*</span></label>
+                  <ng2-simple-dropdown [items]="questions_1" [isEditable]="'false'"
+                    [(ngModel)]="data.sq1"
+                    [defaultValue]="defaultQuest1" name="sq1" #sq1="ngModel" required>
+                  </ng2-simple-dropdown>
+                  <small [hidden]="sq1.valid || (sq1.pristine)" class="text-danger"> it is required  </small>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-check-label">Answer<span class="req"><span class="req">*</span></span></label>
+                    <input type="text" class="form-control" [(ngModel)]="data.sa1" name="sa1" #sa1="ngModel"  required/>
+                    <small [hidden]="sa1.valid || (sa1.pristine)" class="text-danger"> it is required  </small>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-check-label">Security Question: 2<span class="req">*</span></label>
+                  <ng2-simple-dropdown [items]="questions_2" [isEditable]="'false'"
+                  [(ngModel)]="data.sq2"
+                  [defaultValue]="defaultQuest2" name="sq2" #sq2="ngModel" required>
+                  </ng2-simple-dropdown>
+                  <small [hidden]="sq2.valid || (sq2.pristine)" class="text-danger"> it is required  </small>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-check-label">Answer<span class="req">*</span></label>
+                  <input type="text" class="form-control" name="sa2" #sa2="ngModel"   [(ngModel)]="data.sa2" required/>
+                  <small [hidden]="sa2.valid || (sa2.pristine)" class="text-danger"> it is required  </small>
+                </div>
+
+              </div>
+              <div *ngSwitchCase="true" >
+                <img src="/assets/images/loading.gif" alt=""/>
+              </div>
+            </div>
+
+          </wizard-step>
+        </form-wizard>
+
+        </div>
+      </section>
+    </div>
+    <div class="col-xs-2">&nbsp;</div>
+  </div>
+</div>
+<div class="clearfix">
+  &nbsp;
+</div>

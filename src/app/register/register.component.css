@@ -1,0 +1,13 @@
+
+.demo {
+    padding: 0px 0px;
+}
+[hidden] {
+display: none !important;
+}
+
+.card-footer {
+display: flex!important;
+justify-content: space-between!important;
+}
+.req{color:#a94442;font-size: 85%;}

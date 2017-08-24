@@ -1,0 +1,171 @@
+/* You can add global styles to this file, and also import other style files */
+button{
+    outline: none!important;
+}
+
+.login {
+  background:#00245D;
+  color:white;
+  min-height: 394px;
+  border-radius:6px;
+}
+.flight-book{
+  background:#f1f5f8;
+  border-radius:6px;
+  min-height: 394px;
+  margin-left: 24px;
+  margin: 0px 3px 10px 24px;
+}
+.trip-radio{
+  display:inline;
+}
+.btn-round-lg{
+border-radius: 22.5px;
+}
+.btn-round{
+border-radius: 17px;
+}
+.btn-round-sm{
+border-radius: 15px;
+}
+.btn-round-xs{
+border-radius: 11px;
+padding-left: 10px;
+padding-right: 10px;
+}
+.datepicker-actions__input{
+  height:34px;
+}
+.slider_img {
+  padding-left:0px!important;
+  margin-left: -3px;
+  padding-right: 10px;
+}
+.slider_img img {
+  width:98%;height:424px;
+}
+.small_content{
+  font-size:12px;
+  color: #4d90cd;
+}
+
+/* Dropdown Button */
+.dropbtn {
+    font-family: sans-serif;
+    background-color: #ff9900;
+    color: white;
+    padding: 16px;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+    width: 162px;
+    min-height: 93px;
+    border-radius: 5px;
+    font-weight: bold;
+
+}
+.dropdown_blue {
+    font-family: sans-serif;
+    background-color: #002559;
+    color: white;
+    padding: 18px;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+    width: 162px;
+    min-height: 93px;
+    border-radius: 5px;
+    font-weight: bold;
+
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 990px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    left:18%;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1;}
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: #4A8CC8;
+}
+.ngui-auto-complete > ul {
+  margin-left: -13.5px!important;
+  width: 169%!important;
+}
+.inputImg{
+  float: left;
+  font-size: 9px;
+  background: #306FAA;
+  padding: 3px;
+  left: 0px;
+  margin: -2px 6px 0px -6px;
+  color: #fff;
+  border-radius: 2px;
+  width: 14%;
+  height: 27px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+input[type="radio"]:checked {
+      border-color: green!important;
+    }
+.datepicker-panel {
+  min-width:18em!important;
+}
+[_nghost-c4] {
+  top:20px!important;
+}
+.plan-a-trip-submenu > ul li {
+  list-style: none;
+  display: inline-block;
+}
+.carousel-control.left {background-image:none;}
+.carousel-control.right {background-image:none;}
+
+.carousel-indicators .active {background-color:orange!important}
+.header1_link {font-size:12px;right:0;margin-right: 2%;}
+.carousel-indicators {background-color:white;width:100px;left:72%;height: 24px;bottom: 0px;padding: 5px;}
+.dp-picker-input {width:286px!important;}
+.dp-calendar-day {width:40px!important;}
+.slide1{height:320px!important;margin:8px;width:23%}
+.slide1 a {font-size:12px!important;color:#454545;text-decoration:none;}
+.slide1 a img {width:100%;}
+.slide1 h4 {color:#3C4E90;font-weight: bold;font-size:16px;}
+.footer-img{float:left;padding-right:10px;padding-top:3px;}
+.footer .fine-print {font-size:12px;}
+.sitemap-wrap ul li{list-style: none;line-height: 24px;}
+.social-wrap ul li{list-style: none;margin-bottom: 5px;}
+.social-wrap li span {font-size:12px;}
+.social-wrap li img{width: 7%;margin-right: 9px; margin-left: -16px;}
+.sitemap-wrap ul li a {text-decoration: none;cursor:pointer;font-size:13px;}
+.social-wrap ul li a {text-decoration: none;cursor:pointer;font-size:13px;}
+.list-head {color:#004990;font-weight:bold;}
+.error {font-size:12px;color:red;}

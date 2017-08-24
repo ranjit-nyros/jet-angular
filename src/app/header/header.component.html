@@ -1,0 +1,146 @@
+<div class="wrapper">
+  &nbsp;
+  </div>
+<div class="row" style="margin-top:23px;">
+  <div class="col-xs-12 ">
+    <div class="pull-right header1_link">
+      <i class="glyphicon glyphicon-info-sign red" style="color:orange;"></i>TRAVEL ALERT <a href="#">Click Here <i class="glyphicon glyphicon-caret" style="color:orange;"></i></a>
+    </div>
+  </div>
+</div>
+<div class="clearfix">&nbsp;</div>
+<div class="row">
+  <div class="col-xs-3">
+    <h2 style="color:white;margin: -18px 0px 0px -15px;font-size: 28px;font-weight: bold;">jetBlue</h2>
+  </div>
+  <div class="col-xs-9">
+    <div class="pull-right header2_link">
+      <ul class="login-utility">
+                    <li><a lang="es" class="espanol jb-primary-link" [routerLink]="['/']" onclick="">Español</a>
+                    </li>
+                    <li>
+                        <a class="help jb-primary-link" [routerLink]="['/']">
+                        Help
+                        </a>
+                    </li>
+                    <li>
+                        <a class="contact-us jb-primary-link" [routerLink]="['/']">
+                        Contact us
+                        </a>
+                    </li>
+                    <li>
+                       <a class="blog jb-primary-link"  [routerLink]="['/']">
+                       Blog
+                       </a>
+                    </li>
+                    <li class="soflyHeaderMaster">
+                        <a class="jb-primary-link" [routerLink]="['/']">
+                        SoFly
+                        </a>
+                    </li>
+
+                            <li>
+                                <a  class="trueblue-sprite" [routerLink]="['/']">
+                                    TRUEBLUE
+                                </a>
+                            </li>
+                            <li class="true-blue-sign-in" *ngIf="!tokenAuthService.userSignedIn()">
+
+                            <a class="sign-in jb-primary-link btn btn-sm btn-primary" [routerLink]="['/']">
+                                <span>SIGN IN</span>
+                            </a>
+                            </li>
+                            <li class="true-blue-join" *ngIf="!tokenAuthService.userSignedIn()" >
+                              <a class="sign-in jb-primary-link btn btn-sm btn-primary" [routerLink]="['/join']"><span>JOIN</span></a>
+                            </li>
+                            <li class="true-blue-sign-in" *ngIf="tokenAuthService.userSignedIn()">
+
+                            <a class="sign-in jb-primary-link btn btn-sm btn-primary" href="#">
+                                <span ><a (click)="logOut()" style="color:white;">SIGN OUT</a></span>
+                            </a>
+                            </li>
+                </ul>
+    </div>
+  </div>
+</div>
+<div class="row col-xs-12" style="padding:0px 0px 0px 3px;">
+<div class="dropdown">
+  <div class="dropbtn">Plan a Trip</div>
+
+</div>
+<div class="dropdown">
+  <div class="dropbtn">Manage Flights</div>
+
+</div>
+<div class="dropdown">
+  <div class="dropbtn">Where we Jet</div>
+
+</div>
+<div class="dropdown">
+  <div class="dropbtn">Flying on JetBlue</div>
+  <!-- <div class="dropdown-content">
+    <a href="#">Link 1</a>
+    <a href="#">Link 2</a>
+    <a href="#">Link 3</a>
+  </div> -->
+</div>
+<div class="dropdown">
+  <div class="dropbtn">Travel Information</div>
+  <!-- <div class="dropdown-content">
+    <div class="plan-a-trip-submenu">
+                <ul>
+                    <li class="flights">
+                    <a class="jb-secondary-link" href="#">
+
+                    <span class="secondary-link-name">Flights</span>
+
+                    </a>
+                    </li>
+                    <li class="vacations">
+                    <a class="jb-secondary-link" href="#">
+
+                    <span class="secondary-link-name">Vacations</span>
+                    </a>
+                    </li>
+                    <li class="hotels">
+                    <a class="jb-secondary-link" href="#" target="_blank">
+
+                        <span class="secondary-link-name">Hotels</span>
+
+                    </a>
+                    </li>
+                    <li class="cars">
+                    <a class="jb-secondary-link" href="#" target="_blank">
+
+                        <span class="secondary-link-name">Cars</span>
+                    </a>
+                    </li>
+                    <li class="cruises">
+                    <a class="jb-secondary-link" href="#">
+                        <span class="secondary-link-name">Cruises</span>
+                    </a>
+                    </li>
+                    <li class="deals-sprite">
+                    <a class="jb-secondary-link" href="#">
+
+                        <span class="secondary-link-name">Deals</span>
+                    </a>
+                    </li>
+
+                </ul>
+            </div>
+  </div> -->
+</div>
+<div class="dropdown">
+  <div class="dropdown_blue" *ngIf="authTokenService.currentUserData">
+    {{authTokenService.currentUserData.first_name}}'s
+    TrueBlue
+  </div>
+  <div class="dropdown_blue" *ngIf="!authTokenService.currentUserData">
+    TrueBlue
+  </div>
+</div>
+</div>
+
+<div class="clearfix">&nbsp;</div>
+<div class="clearfix">&nbsp;</div>

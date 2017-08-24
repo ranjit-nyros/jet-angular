@@ -1,0 +1,28 @@
+.login-utility > li{
+  list-style: none;
+  display: inline;
+  padding:10px;
+}
+.trueblue-sprite{
+  color:#002559;
+  font-weight: bold;
+}
+.header2_link{
+  right:0;margin-right: 2%;
+}
+.header2_link a{
+  text-decoration: none;
+}
+.header1_link a{
+  text-decoration: none;
+}
+.wrapper{
+  background: url('https://www.jetblue.com//img/bg-jetblue-body-logoonly.jpg') no-repeat ;
+    width: 100%;
+    min-width: 968px;
+    text-align: left;
+    padding: 0;
+    position: absolute;
+    left: -206px!important;
+    height: 190px;
+}
